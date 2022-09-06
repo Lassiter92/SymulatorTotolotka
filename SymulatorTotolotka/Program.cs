@@ -13,77 +13,89 @@
             // losowanie liczby
             for (int i = 0; i < wylosowane.Length; i++)
             {
+
                 // zapisanie losowanych liczb do tablicy "wylosowane"
                 wylosowane[i] = rnd.Next(1, 50);
+
+                // sprawdzenie- zeby liczba sie nie powtarzała
                 if (i >= 1)
                 {
-                    // test czy dana liczba została już wylosowana, jeśli tak losuje nową
-                    if (wylosowane[i] == wylosowane[i - 1])
+                    for (int j = 0; j < i; j++)
                     {
-                        wylosowane[i] = rnd.Next(1, 50);
+
+                        if (wylosowane[i] == wylosowane[j])
+                        {
+                            wylosowane[i] = rnd.Next(1, 50);
+                            j = -1;
+                        }
+
                     }
                 }
+
                 Console.Write(wylosowane[i] + " ");
 
             }
+
             Console.WriteLine();
             int licznikLiczbZgodnych = 0;
+
             // kupony z totka 
             while (test == false)
             {
                 licznikLiczbZgodnych = 0;
+
+                //losowanie liczb do kuponu
                 for (int i = 0; i < totek.Length; i++)
                 {
                     totek[i] = rnd.Next(1, 50);
                     if (i >= 1)
                     {
-                        // test czy dana liczba została już wylosowana, jeśli tak losuje nową
-                        if (totek[i] == totek[i - 1])
+                        for (int j = 0; j < i; j++)
                         {
-                            totek[i] = rnd.Next(1, 50);
+
+                            if (totek[i] == totek[j])
+                            {
+                                totek[i] = rnd.Next(1, 50);
+                                j = -1;
+                            }
+
                         }
                     }
                 }
-
-
-                for (int i = 0; i < totek.Length; i++)
+                // sprawdzenie czy kupon jest taki sam jak wylosowana
+                for (int i = 0; i < wylosowane.Length; i++)
                 {
-
-                    for (int j = 0; j < totek.Length; j++)
+                    for (int j = 0; j < wylosowane.Length; j++)
                     {
-                        if (totek[i] == wylosowane[j])
+                        if (wylosowane[i] == totek[j])
                         {
                             licznikLiczbZgodnych++;
                             break;
                         }
-                        else if (totek[i] != wylosowane[j])
+                        else
                         {
-
                             continue;
                         }
-                    }
 
+                    }
+                    if (licznikLiczbZgodnych == 0)
+                    {
+                        licznik++;
+                        break;
+                    }
+                    
                 }
-                licznik++;
-                Console.WriteLine(licznik);
-                if (licznikLiczbZgodnych == 5)
+                if (licznikLiczbZgodnych == 6)
                 {
                     test = true;
+                    for(int i = 0; i < totek.Length; i++)
+                    {
+                        Console.Write($"{totek[i]} ");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine($"Liczba prob {licznik}");
                 }
             }
-            Console.WriteLine();
-            for (int i = 0; i < totek.Length; i++)
-            {
-                Console.Write(totek[i] + " ");
-               
-            }
-            Console.WriteLine();
-            for (int i = 0; i < totek.Length; i++)
-            {
-                Console.Write(wylosowane[i] + " ");
-
-            }
-
         }
     }
 }
